@@ -5,7 +5,7 @@ import com.lq.common.utils.StringUtils;
 /**
  * 分页数据
  * 
- * @author ruoyi
+ * @author LQ
  */
 public class PageEntity
 {

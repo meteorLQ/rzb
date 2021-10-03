@@ -5,7 +5,7 @@ package com.lq.common.core.page;
 /**
  * 表格数据处理
  * 
- * @author ruoyi
+ * @author LQ
  */
 public class TableSupport
 {

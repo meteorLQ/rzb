@@ -3,8 +3,8 @@ package com.lq.common.core.controller;
 import com.lq.common.core.page.PageEntity;
 import com.lq.common.core.page.TableSupport;
 import com.lq.common.utils.StringUtils;
-import com.sun.org.slf4j.internal.Logger;
-import com.sun.org.slf4j.internal.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class BaseController {
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());

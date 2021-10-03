@@ -38,6 +38,11 @@
             <artifactId>lq-system</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>com.lq</groupId>
+            <artifactId>lq-framework</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
 
     </dependencies>
 
