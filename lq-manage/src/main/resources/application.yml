@@ -2,7 +2,7 @@
 # 开发环境配置
 server:
   # 服务器的HTTP端口，默认为8080
-  port: 8080
+  port: 9090
   servlet:
     # 应用的访问路径
     context-path: /
@@ -27,23 +27,24 @@ spring:
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/sys?useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/rzb?useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC
     username: root
     password: 123456
 
 # MyBatis配置
-mybatis:
-    # 搜索指定包别名
-    typeAliasesPackage: com.ruoyi.**.domain
-    # 配置mapper的扫描，找到所有的mapper.xml映射文件
-    mapperLocations: classpath*:mapper/**/*Mapper.xml
+#mybatis:
+#    # 搜索指定包别名
+##    typeAliasesPackage: com.ruoyi.**.domain
+#    # 配置mapper的扫描，找到所有的mapper.xml映射文件
+#    mapperLocations: classpath*:mapper/**/*Mapper.xml
     # 加载全局的配置文件
-    configLocation: classpath:mybatis/mybatis-config.xml
+#    configLocation: classpath:mybatis/mybatis-config.xml
 
 # MyBatis配置
 mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  mapper-locations: classpath*::mapper/**/*Mapper.xml
 
 
 

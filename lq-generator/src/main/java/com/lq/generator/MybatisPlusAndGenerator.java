@@ -43,7 +43,7 @@ public class MybatisPlusAndGenerator {
         DataSourceConfig dsc = new DataSourceConfig();
         //连接的url地址
         // dsc.setUrl("jdbc:mysql://drds362mh8rzjb17.drds.yun.sinopec.com:3306/saasrada_int_dev?useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC");
-        dsc.setUrl("jdbc:mysql://localhost:3306/sys?useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC");
+        dsc.setUrl("jdbc:mysql://localhost:3306/rzb?useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC");
         // dsc.setSchemaName("public");
         //设置驱动的名称
         dsc.setDriverName("com.mysql.cj.jdbc.Driver");
