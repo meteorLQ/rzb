@@ -1,6 +1,7 @@
 package com.lq.web.controller;
 
 
+import com.lq.common.core.controller.BaseController;
 import com.lq.common.core.domain.ResponseEntity;
 import com.lq.system.entity.IntegralGrade;
 import com.lq.system.service.IIntegralGradeService;
@@ -24,7 +25,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/integralGrade")
-public class IntegralGradeController {
+public class IntegralGradeController extends BaseController {
     @Resource
     private IIntegralGradeService iIntegralGradeService;
 
@@ -38,7 +39,7 @@ public class IntegralGradeController {
     public ResponseEntity save(@Valid IntegralGrade integralGrade) {
         boolean save = iIntegralGradeService.save(integralGrade);
         if (save) {
-          return   ResponseEntity.success();
+            return ResponseEntity.success();
         }
         return ResponseEntity.error();
     }

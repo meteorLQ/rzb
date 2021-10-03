@@ -15,10 +15,10 @@ server:
     min-spare-threads: 30
 
 # 日志配置
-logging:
-  level:
-    com.lq: debug
-    org.springframework: warn
+#logging:
+#  level:
+#    com.lq: debug
+#    org.springframework: warn
 
 # Spring配置
 spring:
