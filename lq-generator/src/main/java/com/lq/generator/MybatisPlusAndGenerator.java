@@ -75,7 +75,7 @@ public class MybatisPlusAndGenerator {
         strategyConfig.setLogicDeleteFieldName("is_deleted");
 //        strategyConfig.setControllerMappingHyphenStyle(true); //url中驼峰转连字符
         //生成指定表
-//        strategyConfig.setInclude(new String[]{"sys_menu", "sys_role", "sys_role_menu", "sys_user", "sys_user_role"});
+        strategyConfig.setInclude(new String[]{"sys_menu"});
             //可变参数用数组，最好再模板里把它注释掉
 //        strategyConfig.setTablePrefix(new String[]{""});
         //驼峰命名

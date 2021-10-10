@@ -5,11 +5,7 @@ import com.lq.common.core.controller.BaseController;
 import com.lq.common.core.domain.ResponseEntity;
 import com.lq.system.entity.IntegralGrade;
 import com.lq.system.service.IIntegralGradeService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
@@ -24,7 +20,8 @@ import java.util.List;
  * @since 2021-09-20
  */
 @RestController
-@RequestMapping("/integralGrade")
+@CrossOrigin
+@RequestMapping("/core/integralGrade")
 public class IntegralGradeController extends BaseController {
     @Resource
     private IIntegralGradeService iIntegralGradeService;
