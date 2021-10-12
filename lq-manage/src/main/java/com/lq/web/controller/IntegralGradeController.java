@@ -32,6 +32,14 @@ public class IntegralGradeController extends BaseController {
         return ResponseEntity.success(list);
     }
 
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity delete(@PathVariable Long id) {
+        if (iIntegralGradeService.removeById(id)) {
+            return ResponseEntity.success("删除成功！");
+        }
+        return ResponseEntity.error("删除失败！");
+    }
+
     @PostMapping("/save")
     public ResponseEntity save(@Valid IntegralGrade integralGrade) {
         boolean save = iIntegralGradeService.save(integralGrade);
