@@ -32,6 +32,12 @@ public class IntegralGradeController extends BaseController {
         return ResponseEntity.success(list);
     }
 
+    @GetMapping("/getById/{id}")
+    public ResponseEntity getById(@PathVariable Long id) {
+        IntegralGrade integralGrade = iIntegralGradeService.getById(id);
+        return ResponseEntity.success(integralGrade);
+    }
+
     @DeleteMapping("/delete/{id}")
     public ResponseEntity delete(@PathVariable Long id) {
         if (iIntegralGradeService.removeById(id)) {
@@ -41,7 +47,7 @@ public class IntegralGradeController extends BaseController {
     }
 
     @PostMapping("/save")
-    public ResponseEntity save(@Valid IntegralGrade integralGrade) {
+    public ResponseEntity save(@RequestBody @Valid IntegralGrade integralGrade) {
         boolean save = iIntegralGradeService.save(integralGrade);
         if (save) {
             return ResponseEntity.success();
