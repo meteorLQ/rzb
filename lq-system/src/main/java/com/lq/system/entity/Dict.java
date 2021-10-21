@@ -1,12 +1,17 @@
 package com.lq.system.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+
 import java.io.Serializable;
 
 /**
@@ -51,13 +56,15 @@ public class Dict implements Serializable {
      * 创建时间
      */
     @TableField(fill = FieldFill.INSERT)
-    private Date createTime;
+//    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    private LocalDateTime createTime;
 
     /**
      * 更新时间
      */
     @TableField(fill = FieldFill.INSERT_UPDATE)
-    private Date updateTime;
+//    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    private LocalDateTime updateTime;
 
     /**
      * 删除标记（0:不可用 1:可用）
@@ -65,6 +72,12 @@ public class Dict implements Serializable {
     @TableField("is_deleted")
     @TableLogic
     private Boolean deleted;
+
+    /**
+     * 是否含有子节点
+     */
+    @TableField(exist = false)
+    private Boolean hasChildren;
 
 
     public Long getId() {
@@ -107,19 +120,19 @@ public class Dict implements Serializable {
         this.dictCode = dictCode;
     }
 
-    public Date getCreateTime() {
+    public LocalDateTime getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(LocalDateTime createTime) {
         this.createTime = createTime;
     }
 
-    public Date getUpdateTime() {
+    public LocalDateTime getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(Date updateTime) {
+    public void setUpdateTime(LocalDateTime updateTime) {
         this.updateTime = updateTime;
     }
 
@@ -131,17 +144,26 @@ public class Dict implements Serializable {
         this.deleted = deleted;
     }
 
+    public Boolean isHasChildren() {
+        return hasChildren;
+    }
+
+    public void setHasChildren(Boolean hasChildren) {
+        this.hasChildren = hasChildren;
+    }
+
     @Override
     public String toString() {
         return "Dict{" +
-        "id=" + id +
-        ", parentId=" + parentId +
-        ", name=" + name +
-        ", value=" + value +
-        ", dictCode=" + dictCode +
-        ", createTime=" + createTime +
-        ", updateTime=" + updateTime +
-        ", deleted=" + deleted +
-        "}";
+                "id=" + id +
+                ", parentId=" + parentId +
+                ", name='" + name + '\'' +
+                ", value=" + value +
+                ", dictCode='" + dictCode + '\'' +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
+                ", deleted=" + deleted +
+                ", hasChildren=" + hasChildren +
+                '}';
     }
 }

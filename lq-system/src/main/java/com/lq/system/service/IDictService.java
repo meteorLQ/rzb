@@ -3,6 +3,8 @@ package com.lq.system.service;
 import com.lq.system.entity.Dict;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
+
 /**
  * <p>
  * 数据字典 服务类
@@ -13,4 +15,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IDictService extends IService<Dict> {
 
+    List<Dict> listByParentId(Long parentId);
 }
