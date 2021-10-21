@@ -37,6 +37,7 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements ID
     public List<Dict> listByParentId(Long parentId) {
         // 首先查询redis中是否存在数据列表
         try {
+            log.info("redis中读取");
             List<Dict> dictList = (List<Dict>) redisTemplate.opsForValue().get("rzb:dictList" + parentId);
             if (CollectionUtils.isNotEmpty(dictList)) {
                 return dictList;
@@ -47,6 +48,7 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements ID
         //如果存在则从redis中直接返回数据列表
 
         // 如果不存在则查询数据库
+        log.info("读取数据库中字典数据");
         List<Dict> dicts = this.lambdaQuery().eq(Dict::getParentId, parentId).list();
         dicts.forEach(dict -> {
             Boolean hasChildren = isHasChildren(dict.getId());
@@ -56,6 +58,7 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements ID
         });
         try {
             redisTemplate.opsForValue().set("rzb:dictList" + parentId, dicts, 5, TimeUnit.MINUTES);
+            log.info("字典数据存入redis中");
         } catch (Exception e) {
             log.error("redis读取异常:", ExceptionUtils.getStackTrace(e));
         }
