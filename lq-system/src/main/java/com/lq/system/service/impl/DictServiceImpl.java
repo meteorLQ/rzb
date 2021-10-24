@@ -66,6 +66,23 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements ID
         return dicts;
     }
 
+    @Override
+    public boolean save(Dict dict) {
+        boolean save = super.save(dict);
+        if (save) {
+            try {
+
+                Boolean flag = redisTemplate.delete("rzb:dictList" + dict.getParentId());
+                if (flag) {
+                    return Boolean.TRUE;
+                }
+            } catch (Exception e) {
+                log.error("缓存删除失败:key{}", "rzb:dictList" + dict.getParentId(), e);
+            }
+        }
+        return Boolean.FALSE;
+    }
+
     public Boolean isHasChildren(Long id) {
         Long count = this.lambdaQuery().eq(Dict::getParentId, id).count();
         if (count > 0) {

@@ -16,4 +16,5 @@ import java.util.List;
 public interface IDictService extends IService<Dict> {
 
     List<Dict> listByParentId(Long parentId);
+    boolean save(Dict dict);
 }

@@ -9,6 +9,7 @@
         <module>lq-system</module>
         <module>lq-manage</module>
         <module>lq-generator</module>
+        <module>lq-sms</module>
     </modules>
 
 
@@ -46,6 +47,7 @@
         <velocity.version>1.7</velocity.version>
         <jwt.version>0.9.1</jwt.version>
         <mybatis-plus.version>3.4.3.3</mybatis-plus.version>
+        <guava.version>31.0.1-jre</guava.version>
     </properties>
 
 
@@ -67,6 +69,11 @@
                 <groupId>commons-collections</groupId>
                 <artifactId>commons-collections</artifactId>
                 <version>${commons.collections.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

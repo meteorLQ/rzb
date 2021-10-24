@@ -25,25 +25,21 @@ public class DictController {
     @Resource
     IDictService dictService;
 
-    @Resource
-    private RedisTemplate<Object, Object> redisTemplate;
-
     @GetMapping("/listByParentId/{parentId}")
     public ResponseEntity listByParentId(@PathVariable Long parentId){
         List<Dict> list= dictService.listByParentId(parentId);
         return  ResponseEntity.success(list);
     }
-    @GetMapping("/redisTest")
-    public ResponseEntity redisTest(){
-        Dict dict = dictService.getById(1);
-        redisTemplate.opsForValue().set("dict",dict);
-        return  ResponseEntity.success();
-    }
-    @GetMapping("/redisGet")
-    public ResponseEntity redisGet(){
 
-        Dict dict = (Dict) redisTemplate.opsForValue().get("dict");
-        return  ResponseEntity.success(dict);
+    @PostMapping("/saveDict")
+    public ResponseEntity saveDict(@RequestBody Dict dict){
+
+        if (dictService.save(dict)){
+            return  ResponseEntity.success("添加成功！");
+        }
+        return  ResponseEntity.error("添加失败,请稍后重试！");
+
     }
+
 }
 
