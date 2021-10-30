@@ -38,7 +38,14 @@ public class DictController {
             return  ResponseEntity.success("添加成功！");
         }
         return  ResponseEntity.error("添加失败,请稍后重试！");
+    }
 
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity delete(@PathVariable Long id) {
+        if (dictService.removeById(id)) {
+            return ResponseEntity.success("删除成功！");
+        }
+        return ResponseEntity.error("删除失败！");
     }
 
 }
