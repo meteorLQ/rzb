@@ -83,6 +83,13 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements ID
         return Boolean.FALSE;
     }
 
+    @Override
+    public boolean removeById(Long id) {
+        Dict dict = super.getById(id);
+        super.removeById(id);
+       return redisTemplate.delete("rzb:dictList"+dict.getParentId());
+    }
+
     public Boolean isHasChildren(Long id) {
         Long count = this.lambdaQuery().eq(Dict::getParentId, id).count();
         if (count > 0) {
