@@ -26,18 +26,24 @@ public class DictController {
     IDictService dictService;
 
     @GetMapping("/listByParentId/{parentId}")
-    public ResponseEntity listByParentId(@PathVariable Long parentId){
-        List<Dict> list= dictService.listByParentId(parentId);
-        return  ResponseEntity.success(list);
+    public ResponseEntity listByParentId(@PathVariable Long parentId) {
+        List<Dict> list = dictService.listByParentId(parentId);
+        return ResponseEntity.success(list);
     }
 
-    @PostMapping("/saveDict")
-    public ResponseEntity saveDict(@RequestBody Dict dict){
+    @GetMapping("/getById/{id}")
+    public ResponseEntity getById(@PathVariable Long id) {
+        Dict dict = dictService.getById(id);
+        return ResponseEntity.success(dict);
+    }
 
-        if (dictService.save(dict)){
-            return  ResponseEntity.success("添加成功！");
+    @PostMapping("/saveOrUpdateDict")
+    public ResponseEntity saveOrUpdateDict(@RequestBody Dict dict) {
+
+        if (dictService.saveOrUpdate(dict)) {
+            return ResponseEntity.success("操作成功！");
         }
-        return  ResponseEntity.error("添加失败,请稍后重试！");
+        return ResponseEntity.error("操作失败,请稍后重试！");
     }
 
     @DeleteMapping("/delete/{id}")

@@ -1,10 +1,9 @@
 package com.lq.system.service.impl;
 
-import com.lq.system.config.MyMetaObjectHandler;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lq.system.entity.Dict;
 import com.lq.system.mapper.DictMapper;
 import com.lq.system.service.IDictService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.Logger;
@@ -13,7 +12,6 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -32,13 +30,14 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements ID
 
     @Resource
     private RedisTemplate redisTemplate;
+    private final static String dictRedKey = "rzb:dictList:";
 
     @Override
     public List<Dict> listByParentId(Long parentId) {
         // 首先查询redis中是否存在数据列表
         try {
             log.info("redis中读取");
-            List<Dict> dictList = (List<Dict>) redisTemplate.opsForValue().get("rzb:dictList" + parentId);
+            List<Dict> dictList = (List<Dict>) redisTemplate.opsForValue().get(dictRedKey + parentId);
             if (CollectionUtils.isNotEmpty(dictList)) {
                 return dictList;
             }
@@ -57,7 +56,7 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements ID
             }
         });
         try {
-            redisTemplate.opsForValue().set("rzb:dictList" + parentId, dicts, 5, TimeUnit.MINUTES);
+            redisTemplate.opsForValue().set(dictRedKey + parentId, dicts, 5, TimeUnit.MINUTES);
             log.info("字典数据存入redis中");
         } catch (Exception e) {
             log.error("redis读取异常:", ExceptionUtils.getStackTrace(e));
@@ -67,27 +66,35 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements ID
     }
 
     @Override
-    public boolean save(Dict dict) {
-        boolean save = super.save(dict);
+    public boolean saveOrUpdate(Dict dict) {
+        boolean save = super.saveOrUpdate(dict);
         if (save) {
             try {
+                if (redisTemplate.hasKey(dictRedKey + dict.getParentId())) {
+                    Boolean flag = redisTemplate.delete(dictRedKey + dict.getParentId());
+                    if (flag) {
+                        log.error("缓存删除失败:key{}", dictRedKey + dict.getParentId());
+                    }
+                } else {
+                    log.warn("缓存key不存在:key{}", dictRedKey + dict.getParentId());
+                    Dict parentDict = this.getById(dict.getParentId());
+                    if (redisTemplate.delete(dictRedKey + parentDict.getParentId())) {
+                        log.info("删除父节点key:key{}", dictRedKey + dict.getParentId());
+                    }
 
-                Boolean flag = redisTemplate.delete("rzb:dictList" + dict.getParentId());
-                if (flag) {
-                    return Boolean.TRUE;
                 }
             } catch (Exception e) {
-                log.error("缓存删除失败:key{}", "rzb:dictList" + dict.getParentId(), e);
+                log.error("缓存删除失败:key{}", dictRedKey + dict.getParentId(), e);
             }
         }
-        return Boolean.FALSE;
+        return Boolean.TRUE;
     }
 
     @Override
     public boolean removeById(Long id) {
         Dict dict = super.getById(id);
         super.removeById(id);
-       return redisTemplate.delete("rzb:dictList"+dict.getParentId());
+        return redisTemplate.delete(dictRedKey + dict.getParentId());
     }
 
     public Boolean isHasChildren(Long id) {
