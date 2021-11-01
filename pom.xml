@@ -11,6 +11,7 @@
         <module>lq-generator</module>
         <module>lq-sms</module>
         <module>lq-oss</module>
+        <module>lq-sso</module>
     </modules>
 
 
@@ -81,6 +82,12 @@
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-all</artifactId>
                 <version>${hutool.version}</version>
+            </dependency>
+            <!-- Token生成与解析-->
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt</artifactId>
+                <version>${jwt.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
