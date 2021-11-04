@@ -1,6 +1,7 @@
 package com.lq.domain.vo;
 
 /**
+ * 登录对象
  *
  * @author LQ
  */

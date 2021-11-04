@@ -17,7 +17,7 @@ public class SysLoginService {
     @Resource
    private TokenService tokenService;
 
-    private String login(String username, String password) {
+    public String login(String username, String password) {
         // 获取认证对象
         Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
         LoginUser loginUser = (LoginUser) authenticate.getPrincipal();
