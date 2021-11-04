@@ -58,6 +58,13 @@ public class LoginUser implements UserDetails {
     private SysUser user;
 
 
+    public LoginUser(Long userId, Long deptId, SysUser user, Set<String> permissions) {
+        this.userId = userId;
+        this.deptId = deptId;
+        this.permissions = permissions;
+        this.user = user;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;

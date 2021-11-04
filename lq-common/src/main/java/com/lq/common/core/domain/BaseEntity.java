@@ -17,7 +17,8 @@ public class BaseEntity implements Serializable
     private static final long serialVersionUID = 1L;
 
     /** 搜索值 */
-    private String searchValue;
+
+//    private String searchValue;
 
     /** 创建者 */
     private String createBy;
@@ -34,20 +35,20 @@ public class BaseEntity implements Serializable
     private Date updateTime;
 
     /** 备注 */
-    private String remark;
+//    private String remark;
 
     /** 请求参数 */
-    private Map<String, Object> params;
+//    private Map<String, Object> params;
 
-    public String getSearchValue()
-    {
-        return searchValue;
-    }
-
-    public void setSearchValue(String searchValue)
-    {
-        this.searchValue = searchValue;
-    }
+//    public String getSearchValue()
+//    {
+//        return searchValue;
+//    }
+//
+//    public void setSearchValue(String searchValue)
+//    {
+//        this.searchValue = searchValue;
+//    }
 
     public String getCreateBy()
     {
@@ -89,27 +90,27 @@ public class BaseEntity implements Serializable
         this.updateTime = updateTime;
     }
 
-    public String getRemark()
-    {
-        return remark;
-    }
-
-    public void setRemark(String remark)
-    {
-        this.remark = remark;
-    }
-
-    public Map<String, Object> getParams()
-    {
-        if (params == null)
-        {
-            params = new HashMap<>();
-        }
-        return params;
-    }
-
-    public void setParams(Map<String, Object> params)
-    {
-        this.params = params;
-    }
+//    public String getRemark()
+//    {
+//        return remark;
+//    }
+//
+//    public void setRemark(String remark)
+//    {
+//        this.remark = remark;
+//    }
+//
+//    public Map<String, Object> getParams()
+//    {
+//        if (params == null)
+//        {
+//            params = new HashMap<>();
+//        }
+//        return params;
+//    }
+//
+//    public void setParams(Map<String, Object> params)
+//    {
+//        this.params = params;
+//    }
 }

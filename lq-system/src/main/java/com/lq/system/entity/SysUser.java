@@ -1,5 +1,6 @@
 package com.lq.system.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.lq.common.core.domain.BaseEntity;
@@ -49,6 +50,7 @@ public class SysUser extends BaseEntity
     private String password;
 
     /** 盐加密 */
+    @TableField(exist = false)
     private String salt;
 
     /** 帐号状态（0正常 1停用） */
@@ -71,13 +73,13 @@ public class SysUser extends BaseEntity
 //    private List<SysRole> roles;
 
     /** 角色组 */
-    private Long[] roleIds;
+    //private Long[] roleIds;
 
     /** 岗位组 */
-    private Long[] postIds;
+   // private Long[] postIds;
 
     /** 角色ID */
-    private Long roleId;
+    //private Long roleId;
 
     public SysUser()
     {
@@ -267,35 +269,35 @@ public class SysUser extends BaseEntity
 //        this.roles = roles;
 //    }
 
-    public Long[] getRoleIds()
-    {
-        return roleIds;
-    }
-
-    public void setRoleIds(Long[] roleIds)
-    {
-        this.roleIds = roleIds;
-    }
-
-    public Long[] getPostIds()
-    {
-        return postIds;
-    }
-
-    public void setPostIds(Long[] postIds)
-    {
-        this.postIds = postIds;
-    }
-
-    public Long getRoleId()
-    {
-        return roleId;
-    }
-
-    public void setRoleId(Long roleId)
-    {
-        this.roleId = roleId;
-    }
+//    public Long[] getRoleIds()
+//    {
+//        return roleIds;
+//    }
+//
+//    public void setRoleIds(Long[] roleIds)
+//    {
+//        this.roleIds = roleIds;
+//    }
+//
+//    public Long[] getPostIds()
+//    {
+//        return postIds;
+//    }
+//
+//    public void setPostIds(Long[] postIds)
+//    {
+//        this.postIds = postIds;
+//    }
+//
+//    public Long getRoleId()
+//    {
+//        return roleId;
+//    }
+//
+//    public void setRoleId(Long roleId)
+//    {
+//        this.roleId = roleId;
+//    }
 
     @Override
     public String toString() {
@@ -318,7 +320,7 @@ public class SysUser extends BaseEntity
             .append("createTime", getCreateTime())
             .append("updateBy", getUpdateBy())
             .append("updateTime", getUpdateTime())
-            .append("remark", getRemark())
+//            .append("remark", getRemark())
 //            .append("dept", getDept())
             .toString();
     }

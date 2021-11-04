@@ -23,6 +23,7 @@ public class LoginController {
     @PostMapping("/login")
     public ResponseEntity login(LoginUser loginUser) {
       //  tokenService.createToken(loginUser);
+        int i=1/0;
         return ResponseEntity.success("sussexx");
     }
 }
