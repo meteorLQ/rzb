@@ -2,6 +2,7 @@ package com.lq.controller;
 
 import com.lq.domain.LoginUser;
 import com.lq.common.core.domain.ResponseEntity;
+import com.lq.domain.vo.LoginVO;
 import com.lq.service.TokenService;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,7 +22,7 @@ public class LoginController {
     TokenService tokenService;
 
     @PostMapping("/login")
-    public ResponseEntity login(LoginUser loginUser) {
+    public ResponseEntity login(LoginVO loginVO) {
       //  tokenService.createToken(loginUser);
         int i=1/0;
         return ResponseEntity.success("sussexx");
