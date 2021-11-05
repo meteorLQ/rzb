@@ -1,5 +1,7 @@
 package com.lq.config;
 
+import com.lq.filter.JwtAuthenticationTokenFilter;
+import com.lq.handle.AuthenticationEntryPointImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -10,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.annotation.Resource;
 
@@ -20,6 +23,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Resource
     UserDetailsService userDetailsService;
+    @Resource
+    AuthenticationEntryPointImpl authenticationEntryPoint;
+
+    @Resource
+    JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter;
 
     @Bean
     @Override
@@ -51,8 +59,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/**/*.css",
                         "/**/*.js",
                         "/profile/**").permitAll()
-                .anyRequest().authenticated()
-        ;
+                .anyRequest().authenticated();
+        //认证失败处理
+        httpSecurity.exceptionHandling().authenticationEntryPoint(authenticationEntryPoint);
+        httpSecurity.addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
     /**

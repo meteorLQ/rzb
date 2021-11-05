@@ -2,9 +2,11 @@ package com.lq.service;
 
 import cn.hutool.core.util.RandomUtil;
 import com.lq.domain.LoginUser;
+import com.sun.tools.javac.Main;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -14,8 +16,8 @@ import java.util.Map;
 @Service
 public class TokenService {
     // 令牌秘钥
-    @Value("${token.secret}")
-    private String secret;
+//    @Value("${token.secret}")
+    private String secret="abcdefghijklmnopqrstuvwxyz";
 
     /**
      * 创建令牌
@@ -31,21 +33,13 @@ public class TokenService {
         String id = RandomUtil.randomNumbers(6);
         Map<String, Object> claims = new HashMap<>();
         claims.put("userID", id);
-        return createToken(claims);
-    }
 
-    /**
-     * 从数据声明生成令牌
-     *
-     * @param claims 数据声明
-     * @return 令牌
-     */
-    private String createToken(Map<String, Object> claims) {
         String token = Jwts.builder()
                 .setClaims(claims)
                 .signWith(SignatureAlgorithm.HS512, secret).compact();
         return token;
     }
+
 
     /**
      * 解析token
@@ -57,8 +51,18 @@ public class TokenService {
         return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
     }
 
+
+    public LoginUser getUserByToken(String token){
+        Claims claims = parseToken(token);
+        String userID = (String) claims.get("userID");
+        LoginUser loginUser = new LoginUser();
+        loginUser.setUserId(Long.valueOf(userID));
+        return loginUser;
+    }
+
     /**
      * 根据token获取用户标识
+     *
      * @param token
      * @return
      */
@@ -67,4 +71,11 @@ public class TokenService {
         return claims.getSubject();
     }
 
+    public static void main(String[] args) {
+        String token ="eyJhbGciOiJIUzUxMiJ9.eyJ1c2VySUQiOiI3MTAyODcifQ.7BHf_xZvMO5iQhEAOEjN3Um-wMQtEuLlCPE9BHtaU9c4eXCLL0QQtuc627p5gYbdXinsJmzBwWR3sVxc0K0zRQ";
+
+        TokenService tokenService = new TokenService();
+        String usernameFromToken = tokenService.getUsernameFromToken(token);
+        System.out.println("usernameFromToken = " + usernameFromToken);
+    }
 }

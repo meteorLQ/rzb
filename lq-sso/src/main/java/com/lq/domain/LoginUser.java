@@ -57,6 +57,8 @@ public class LoginUser implements UserDetails {
      */
     private SysUser user;
 
+    public LoginUser() {
+    }
 
     public LoginUser(Long userId, Long deptId, SysUser user, Set<String> permissions) {
         this.userId = userId;
@@ -72,12 +74,12 @@ public class LoginUser implements UserDetails {
 
     @Override
     public String getPassword() {
-        return user.getPassword();
+        return null;
     }
 
     @Override
     public String getUsername() {
-        return user.getUserName();
+        return null;
     }
 
     @Override
@@ -98,5 +100,85 @@ public class LoginUser implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public Long getDeptId() {
+        return deptId;
+    }
+
+    public void setDeptId(Long deptId) {
+        this.deptId = deptId;
+    }
+
+    public Long getLoginTime() {
+        return loginTime;
+    }
+
+    public void setLoginTime(Long loginTime) {
+        this.loginTime = loginTime;
+    }
+
+    public Long getExpireTime() {
+        return expireTime;
+    }
+
+    public void setExpireTime(Long expireTime) {
+        this.expireTime = expireTime;
+    }
+
+    public String getIpaddr() {
+        return ipaddr;
+    }
+
+    public void setIpaddr(String ipaddr) {
+        this.ipaddr = ipaddr;
+    }
+
+    public String getLoginLocation() {
+        return loginLocation;
+    }
+
+    public void setLoginLocation(String loginLocation) {
+        this.loginLocation = loginLocation;
+    }
+
+    public String getBrowser() {
+        return browser;
+    }
+
+    public void setBrowser(String browser) {
+        this.browser = browser;
+    }
+
+    public String getOs() {
+        return os;
+    }
+
+    public void setOs(String os) {
+        this.os = os;
+    }
+
+    public Set<String> getPermissions() {
+        return permissions;
+    }
+
+    public void setPermissions(Set<String> permissions) {
+        this.permissions = permissions;
+    }
+
+    public SysUser getUser() {
+        return user;
+    }
+
+    public void setUser(SysUser user) {
+        this.user = user;
     }
 }
