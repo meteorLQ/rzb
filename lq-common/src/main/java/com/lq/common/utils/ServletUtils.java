@@ -116,6 +116,7 @@ public class ServletUtils {
             response.getWriter().print(string);
         } catch (IOException e) {
             e.printStackTrace();
+
         }
         return null;
     }

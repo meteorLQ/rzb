@@ -3,6 +3,7 @@ package com.lq.common.core.domain;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -25,14 +26,14 @@ public class BaseEntity implements Serializable
 
     /** 创建时间 */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date createTime;
+    private LocalDateTime createTime;
 
     /** 更新者 */
     private String updateBy;
 
     /** 更新时间 */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date updateTime;
+    private LocalDateTime updateTime;
 
     /** 备注 */
 //    private String remark;
@@ -60,12 +61,12 @@ public class BaseEntity implements Serializable
         this.createBy = createBy;
     }
 
-    public Date getCreateTime()
+    public LocalDateTime getCreateTime()
     {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime)
+    public void setCreateTime(LocalDateTime createTime)
     {
         this.createTime = createTime;
     }
@@ -80,12 +81,12 @@ public class BaseEntity implements Serializable
         this.updateBy = updateBy;
     }
 
-    public Date getUpdateTime()
+    public LocalDateTime getUpdateTime()
     {
         return updateTime;
     }
 
-    public void setUpdateTime(Date updateTime)
+    public void setUpdateTime(LocalDateTime updateTime)
     {
         this.updateTime = updateTime;
     }

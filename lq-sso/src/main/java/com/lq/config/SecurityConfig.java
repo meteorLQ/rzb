@@ -13,6 +13,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.LogoutFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 
 import javax.annotation.Resource;
 
@@ -28,6 +32,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Resource
     JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter;
+//    @Resource
+//    CorsFilter corsFilter;
 
     @Bean
     @Override
@@ -63,6 +69,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         //认证失败处理
         httpSecurity.exceptionHandling().authenticationEntryPoint(authenticationEntryPoint);
         httpSecurity.addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
+        httpSecurity.addFilterBefore(corsFilter(),JwtAuthenticationTokenFilter.class);
+        httpSecurity.addFilterBefore(corsFilter(), LogoutFilter.class);
     }
 
     /**
@@ -71,5 +79,28 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     PasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    /**
+     * 跨域配置
+     */
+    @Bean
+    public CorsFilter corsFilter()
+    {
+        CorsConfiguration config = new CorsConfiguration();
+        config.setAllowCredentials(true);
+        // 设置访问源地址
+        config.addAllowedOriginPattern("*");
+        // 设置访问源请求头
+        config.addAllowedHeader("*");
+        // 设置访问源请求方法
+        config.addAllowedMethod("*");
+        // 有效期 1800秒
+        config.setMaxAge(1800L);
+        // 添加映射路径，拦截一切请求
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", config);
+        // 返回新的CorsFilter
+        return new CorsFilter(source);
     }
 }

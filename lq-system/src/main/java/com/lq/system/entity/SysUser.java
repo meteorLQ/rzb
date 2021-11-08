@@ -10,6 +10,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -63,7 +64,7 @@ public class SysUser extends BaseEntity
     private String loginIp;
 
     /** 最后登录时间 */
-    private Date loginDate;
+    private LocalDateTime loginDate;
 
     /** 部门对象 */
 
@@ -101,6 +102,7 @@ public class SysUser extends BaseEntity
         this.userId = userId;
     }
 
+    @JsonIgnore
     public boolean isAdmin()
     {
         return isAdmin(this.userId);
@@ -239,12 +241,12 @@ public class SysUser extends BaseEntity
         this.loginIp = loginIp;
     }
 
-    public Date getLoginDate()
+    public LocalDateTime getLoginDate()
     {
         return loginDate;
     }
 
-    public void setLoginDate(Date loginDate)
+    public void setLoginDate(LocalDateTime loginDate)
     {
         this.loginDate = loginDate;
     }

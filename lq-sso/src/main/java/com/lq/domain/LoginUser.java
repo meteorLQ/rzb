@@ -1,5 +1,7 @@
 package com.lq.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.lq.system.entity.SysUser;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -73,31 +75,39 @@ public class LoginUser implements UserDetails {
     }
 
     @Override
+//    @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS)
+    @JsonIgnore
     public String getPassword() {
-        return null;
+        return user.getPassword();
     }
 
     @Override
+//    @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS)
+    @JsonIgnore
     public String getUsername() {
-        return null;
+        return user.getUserName();
     }
 
     @Override
+    @JsonIgnore
     public boolean isAccountNonExpired() {
         return true;
     }
 
     @Override
+    @JsonIgnore
     public boolean isAccountNonLocked() {
         return true;
     }
 
     @Override
+    @JsonIgnore
     public boolean isCredentialsNonExpired() {
         return true;
     }
 
     @Override
+    @JsonIgnore
     public boolean isEnabled() {
         return true;
     }
@@ -181,4 +191,6 @@ public class LoginUser implements UserDetails {
     public void setUser(SysUser user) {
         this.user = user;
     }
+
+
 }

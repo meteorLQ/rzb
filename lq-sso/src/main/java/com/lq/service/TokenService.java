@@ -8,16 +8,23 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class TokenService {
     // 令牌秘钥
 //    @Value("${token.secret}")
     private String secret="abcdefghijklmnopqrstuvwxyz";
+
+    @Resource
+    RedisTemplate redisTemplate;
 
     /**
      * 创建令牌
@@ -27,13 +34,13 @@ public class TokenService {
      */
     public String createToken(LoginUser loginUser) {
         //String token = IdUtils.fastUUID();
-        //loginUser.setToken(token);
+//        loginUser.setToken(token);
         //setUserAgent(loginUser);
         // refreshToken(loginUser);
         String id = RandomUtil.randomNumbers(6);
         Map<String, Object> claims = new HashMap<>();
         claims.put("userID", id);
-
+        redisTemplate.opsForValue().set(id,loginUser,30, TimeUnit.MINUTES);
         String token = Jwts.builder()
                 .setClaims(claims)
                 .signWith(SignatureAlgorithm.HS512, secret).compact();
@@ -55,8 +62,8 @@ public class TokenService {
     public LoginUser getUserByToken(String token){
         Claims claims = parseToken(token);
         String userID = (String) claims.get("userID");
-        LoginUser loginUser = new LoginUser();
-        loginUser.setUserId(Long.valueOf(userID));
+        ValueOperations<String,LoginUser> valueOperations = redisTemplate.opsForValue();
+        LoginUser loginUser = valueOperations.get(userID);
         return loginUser;
     }
 
