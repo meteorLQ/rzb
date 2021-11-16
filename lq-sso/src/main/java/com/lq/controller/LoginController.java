@@ -41,7 +41,11 @@ public class LoginController {
     @PostMapping("/info")
     public ResponseEntity getInfo(){
         SysUser sysUser = SecurityUtils.getLoginUser().getUser();
-        return ResponseEntity.success(sysUser);
+        ResponseEntity response = ResponseEntity.success();
+        response.put("roles","");
+        response.put("","");
+        response.put("","");
+        return response;
     }
 
     @PostMapping("/test")
