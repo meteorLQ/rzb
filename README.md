@@ -14,3 +14,6 @@
 > ├─lq-sso				    单点登录(9083)
 > └─lq-system				系统服务(jar)
 > ```
+
+
+![Alt](https://repobeats.axiom.co/api/embed/10f88df158ee637f91cb012920bb9d3ae40e74fd.svg "Repobeats analytics image")
