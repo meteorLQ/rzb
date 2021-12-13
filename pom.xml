@@ -51,6 +51,8 @@
         <mybatis-plus.version>3.4.3.4</mybatis-plus.version>
         <guava.version>31.0.1-jre</guava.version>
         <hutool.version>5.7.15</hutool.version>
+        <log4j2.version>2.15.0</log4j2.version>
+
     </properties>
 
 
