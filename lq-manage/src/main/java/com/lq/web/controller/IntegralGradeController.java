@@ -48,11 +48,13 @@ public class IntegralGradeController extends BaseController {
 
     @PostMapping("/save")
     public ResponseEntity save(@RequestBody @Valid IntegralGrade integralGrade) {
-        boolean save = iIntegralGradeService.save(integralGrade);
-        if (save) {
-            return ResponseEntity.success();
+        if (null != integralGrade.getId()) {
+            iIntegralGradeService.updateById(integralGrade);
+        } else {
+            iIntegralGradeService.save(integralGrade);
         }
-        return ResponseEntity.error();
+
+        return ResponseEntity.success();
     }
 
 }

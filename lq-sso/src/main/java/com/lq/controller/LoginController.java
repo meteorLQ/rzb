@@ -6,10 +6,7 @@ import com.lq.domain.vo.LoginVO;
 import com.lq.service.SysLoginService;
 import com.lq.system.entity.SysUser;
 import com.lq.utils.SecurityUtils;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -38,14 +35,17 @@ public class LoginController {
         return response;
     }
 
-    @PostMapping("/info")
+    @GetMapping("/info")
     public ResponseEntity getInfo(){
         SysUser sysUser = SecurityUtils.getLoginUser().getUser();
+        sysUser.setRoles("admin");
+        sysUser.setAvatar("");
         return ResponseEntity.success(sysUser);
     }
 
     @PostMapping("/test")
     public ResponseEntity test() {
+
 //        String token = sysLoginService.login(loginVO.getUsername(), loginVO.getPassword());
 //        ResponseEntity response = ResponseEntity.success();
 //        response.put("token",token);

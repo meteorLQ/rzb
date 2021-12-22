@@ -70,7 +70,7 @@ public class SysUser extends BaseEntity
 
 //    private SysDept dept;
 //
-//    /** 角色对象 */
+    /** 角色对象 */
 //    private List<SysRole> roles;
 
     /** 角色组 */
@@ -81,10 +81,20 @@ public class SysUser extends BaseEntity
 
     /** 角色ID */
     //private Long roleId;
+    @TableField(exist = false)
+    private String roles;
 
     public SysUser()
     {
 
+    }
+
+    public String getRoles() {
+        return roles;
+    }
+
+    public void setRoles(String roles) {
+        this.roles = roles;
     }
 
     public SysUser(Long userId)

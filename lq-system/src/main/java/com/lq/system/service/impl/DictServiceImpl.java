@@ -70,10 +70,21 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements ID
         boolean save = super.saveOrUpdate(dict);
         if (save) {
             try {
+                // 根节点
+//                if (dict.getParentId() == 1L) {
+//                    // 删除根节点缓存
+//                    Boolean flag = redisTemplate.delete(dictRedKey + 1);
+//
+//                } else {
+//                // 子节点
+//                    // 如果新增的是第一个子节点，是需要删除其根节点缓存的因为有hashresn
+//
+//                }
                 if (redisTemplate.hasKey(dictRedKey + dict.getParentId())) {
                     Boolean flag = redisTemplate.delete(dictRedKey + dict.getParentId());
                     if (flag) {
                         log.error("缓存删除失败:key{}", dictRedKey + dict.getParentId());
+                        redisTemplate.delete(dictRedKey + 1);
                     }
                 } else {
                     log.warn("缓存key不存在:key{}", dictRedKey + dict.getParentId());
@@ -94,7 +105,16 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements ID
     public boolean removeById(Long id) {
         Dict dict = super.getById(id);
         super.removeById(id);
-        return redisTemplate.delete(dictRedKey + dict.getParentId());
+        //
+        List<Dict> dicts = this.listByParentId(id);
+        if (CollectionUtils.isNotEmpty(dicts)) {
+        } else {
+            redisTemplate.delete(dictRedKey + 1);
+        }
+        if (redisTemplate.hasKey(dictRedKey)){
+            return redisTemplate.delete(dictRedKey + dict.getParentId());
+        }
+        return true;
     }
 
     public Boolean isHasChildren(Long id) {
